@@ -1,0 +1,46 @@
+{
+
+  "Workflow_Name": "Data Request Pipeline Trigger",
+
+  "Trigger_Source": "Microsoft Forms - On Response Submission",
+
+  "Action_Steps": [
+
+    {
+
+      "Step_1": "Get response details from Form ID: 884920",
+
+      "Parameters": ["Requester_Email", "Project_Priority", "Required_Data_Attributes"]
+
+    },
+
+    {
+
+      "Step_2": "Condition Check: Filter out blank priority requests",
+
+      "True_Path": "Proceed to Handshake",
+
+      "False_Path": "Terminate with Error email notification"
+
+    },
+
+    {
+
+      "Step_3": "GitHub Connector Action - Create an Issue",
+
+      "Repository_Target": "saumyarai-ux/power-automate-github-ticketing",
+
+      "Mapping": {
+
+        "Issue_Title": "Dynamic: New Data Request from [Requester_Email]",
+
+        "Issue_Body": "Dynamic: Priority level [Project_Priority]. Variables needed: [Required_Data_Attributes]"
+
+      }
+
+    }
+
+  ]
+
+}
+ 
